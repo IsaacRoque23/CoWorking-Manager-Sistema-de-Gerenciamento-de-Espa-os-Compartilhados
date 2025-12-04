@@ -40,26 +40,6 @@ public abstract class jsonPersistencia<E> implements jsonPersistencia1<E> {
     }
 
 
-    //protected jsonPersistencia(Path arquivo, Type tipoLista) {
-      //  this.arquivo = arquivo;
-      //  this.tipoLista = tipoLista;
-      //  this.gson = new GsonBuilder()
-      //          .setPrettyPrinting()
-      //          .create();
-
-      //  try {
-       //     if (!Files.exists(arquivo)) {
-       //         Files.createFile(arquivo);
-
-          //      try (Writer w = Files.newBufferedWriter(arquivo)) {
-           //         w.write("[]");
-          //      }
-          //  }
-        //} catch (IOException e) {
-       //     throw new RuntimeException("Não foi possível criar o arquivo: " + arquivo, e);
-       // }
-    //}
-
     @Override
     public synchronized Espaco salvar(List<E> lista) throws Exception {
         try (Writer writer = Files.newBufferedWriter(arquivo)) {
@@ -71,7 +51,7 @@ public abstract class jsonPersistencia<E> implements jsonPersistencia1<E> {
     @Override
     public synchronized List<E> carregar() {
         try (Reader reader = Files.newBufferedReader(arquivo)) {
-            List<E> lista = gson.fromJson(reader, List.class );
+            List<E> lista = gson.fromJson(reader, this.tipoLista );
             if (lista == null) return new ArrayList<>();
             return lista;
         }
