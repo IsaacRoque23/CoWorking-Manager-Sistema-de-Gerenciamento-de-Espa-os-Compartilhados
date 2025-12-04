@@ -1,0 +1,68 @@
+[
+  {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": true,
+      "id": 45345.0,
+      "nome": "isaac",
+      "capacidade": 40.0,
+      "disponivel": true,
+      "precoPorHora": 30.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": true,
+      "id": 3785.0,
+      "nome": "isaac",
+      "capacidade": 40.0,
+      "disponivel": true,
+      "precoPorHora": 30.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": true,
+      "id": 434.0,
+      "nome": "isaac",
+      "capacidade": 40.0,
+      "disponivel": true,
+      "precoPorHora": 30.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": false,
+      "id": 434.0,
+      "nome": "isaac",
+      "capacidade": 40.0,
+      "disponivel": true,
+      "precoPorHora": 20.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "Dados": {
+      "usarProjetor": true,
+      "id": 434534.0,
+      "nome": "isaac",
+      "capacidade": 40.0,
+      "disponivel": true,
+      "precoPorHora": 40.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "Dados": {
+      "usarProjetor": true,
+      "id": 473894,
+      "nome": "isaac",
+      "capacidade": 30,
+      "disponivel": true,
+      "precoPorHora": 30.0
+    }
+  }
+]
