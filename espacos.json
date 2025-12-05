@@ -20,5 +20,16 @@
       "disponivel": true,
       "precoPorHora": 40.0
     }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "Dados": {
+      "usarProjetor": true,
+      "id": 8384,
+      "nome": "isaac",
+      "capacidade": 40,
+      "disponivel": true,
+      "precoPorHora": 20.0
+    }
   }
 ]

@@ -12,7 +12,7 @@ public class RelatorioServico {
     private ReservaDAO reservaDAO = new ReservaDAO();
 
 
-    // 1) reservas em um período
+
     public List<Reserva> reservasNoPeriodo(LocalDateTime inicio, LocalDateTime fim) throws Exception {
 
         List<Reserva> todas = reservaDAO.carregar();
@@ -46,7 +46,7 @@ public class RelatorioServico {
     }
 
 
-    // Espaçoes mais utilizados
+
     public int usoDoEspaco(int id) throws Exception {
 
         List<Reserva> todas = reservaDAO.carregar();

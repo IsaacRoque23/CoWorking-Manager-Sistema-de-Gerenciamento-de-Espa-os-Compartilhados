@@ -1,6 +1,9 @@
 package Servico;
 
 import Dados.ReservaDAO;
+import Excecoes.DataInvalidaException;
+import Excecoes.ReservaInexistenteException;
+import Excecoes.ReservaSobrepostaException;
 import Modelo.Reserva;
 
 import java.time.Duration;
@@ -12,62 +15,47 @@ public class ReservaServico {
     private ReservaDAO dao = new ReservaDAO();
 
 
-    // Criar reserva
-    public String criarReserva(Reserva nova) {
-        try {
-            List<Reserva> reservas = dao.carregar();
+    public String criarReserva(Reserva nova) throws DataInvalidaException, ReservaSobrepostaException, Exception {
+        List<Reserva> reservas = dao.carregar();
 
-            // validar datas
-            if (nova.getDataInicio().isAfter(nova.getDataFim())) {
-                throw new IllegalArgumentException("Data inicial não pode ser depois da final.");
-            }
 
-            // verificar sobreposição
-            for (Reserva r : reservas) {
-
-                boolean mesmoEspaco = r.getEspaco().getId() == nova.getEspaco().getId();
-
-                boolean sobrepoe =
-                        nova.getDataInicio().isBefore(r.getDataFim()) &&
-                                nova.getDataFim().isAfter(r.getDataInicio());
-
-                if (mesmoEspaco && sobrepoe) {
-                    throw new IllegalArgumentException("Já existe uma reserva nesse período.");
-                }
-            }
-
-            // calcular custo
-            double horas = calcularHoras(nova.getDataInicio(), nova.getDataFim());
-            double valor = nova.getEspaco().calcularCustoReserva(horas);
-            nova.setValorTotal(valor);
-
-            reservas.add(nova);
-            dao.salvar(reservas);
-
-            return "Reserva criada com sucesso!";
-
-        } catch (Exception e) {
-            return "Erro ao criar reserva: " + e.getMessage();
+        if (nova.getDataInicio().isAfter(nova.getDataFim())) {
+            throw new DataInvalidaException("Data inicial não pode ser depois da final.");
         }
+
+        // olhgando se tem sobreposição
+        for (Reserva r : reservas) {
+            boolean mesmoEspaco = r.getEspaco().getId() == nova.getEspaco().getId();
+            boolean sobrepoe = nova.getDataInicio().isBefore(r.getDataFim()) && nova.getDataFim().isAfter(r.getDataInicio());
+
+            if (mesmoEspaco && sobrepoe) {
+                throw new ReservaSobrepostaException("Já existe uma reserva nesse período no mesmo espaço.");
+            }
+        }
+
+        //calcular custo
+        double horas = calcularHoras(nova.getDataInicio(), nova.getDataFim());
+        double valor = nova.getEspaco().calcularCustoReserva(horas);
+        nova.setValorTotal(valor);
+
+        reservas.add(nova);
+        dao.salvar(reservas);
+
+        return "Reserva criada com sucesso!";
     }
 
-
-    // cálculo de horas
+    // calculkar de horas
     public double calcularHoras(LocalDateTime inicio, LocalDateTime fim) {
         long minutos = Duration.between(inicio, fim).toMinutes();
         return minutos / 60.0;
     }
 
-
     // cancelar reserva
-    public String cancelarReserva(int id) throws Exception {
-
+    public String cancelarReserva(int id) throws ReservaInexistenteException, Exception {
         List<Reserva> reservas = dao.carregar();
 
         for (Reserva r : reservas) {
-
             if (r.getId() == id) {
-
                 LocalDateTime agora = LocalDateTime.now();
 
                 long minutos = Duration.between(agora, r.getDataInicio()).toMinutes();
@@ -80,13 +68,12 @@ public class ReservaServico {
                 }
 
                 r.setStatus("Cancelada");
-
                 dao.salvar(reservas);
 
                 return "Reserva cancelada. Taxa aplicada: R$ " + taxa;
             }
         }
 
-        return "Reserva não encontrada.";
+        throw new ReservaInexistenteException("Reserva não encontrada.");
     }
 }

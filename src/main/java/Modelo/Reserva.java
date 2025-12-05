@@ -37,7 +37,7 @@ public class Reserva {
         }
 
         if (status == null || status.isBlank()) {
-            status = "Pendente"; // status padrão
+            status = "Pendente";
         }
 
         this.id = id;
