@@ -11,8 +11,13 @@ import java.util.List;
 
 public class PagamentoServico {
 
-    private PagamentoDAO pagamentoDAO = new PagamentoDAO();
-    private ReservaDAO reservaDAO = new ReservaDAO();
+    private PagamentoDAO pagamentoDAO;
+    private ReservaDAO reservaDAO;
+
+    public PagamentoServico() {
+        this.pagamentoDAO = pagamentoDAO;
+        this.reservaDAO = reservaDAO;
+    }
 
     public String registrarPagamento(Pagamento pagamento)
             throws ReservaNaoEncontradaException, PagamentoInvalidoException, Exception {
@@ -24,6 +29,13 @@ public class PagamentoServico {
 
         for (Reserva r : reservas) {
             if (r.getId() == pagamento.getIdReserva()) {
+
+                if (r.getStatus().equals("Paga")) {
+                    throw new PagamentoInvalidoException(
+                            "A reserva " + r.getId() + " já está paga."
+                    );
+                }
+
                 r.setStatus("Paga");
                 reservaEncontrada = true;
                 break;

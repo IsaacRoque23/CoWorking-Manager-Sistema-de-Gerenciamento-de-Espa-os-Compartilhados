@@ -2,7 +2,6 @@ package Dados;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import Modelo.Espaco;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -39,29 +38,18 @@ public abstract class jsonPersistencia<E> implements jsonPersistencia1<E> {
         }
     }
 
-
     @Override
-    public synchronized Espaco salvar(List<E> lista) throws Exception {
+    public synchronized void salvar(List<E> lista) throws Exception {
         try (Writer writer = Files.newBufferedWriter(arquivo)) {
             gson.toJson(lista, tipoLista, writer);
         }
-        return null;
     }
 
     @Override
-    public synchronized List<E> carregar() {
+    public synchronized List<E> carregar() throws Exception {
         try (Reader reader = Files.newBufferedReader(arquivo)) {
-            List<E> lista = gson.fromJson(reader, this.tipoLista );
-            if (lista == null) return new ArrayList<>();
-            return lista;
+            List<E> lista = gson.fromJson(reader, this.tipoLista);
+            return lista == null ? new ArrayList<>() : lista;
         }
-        catch(IOException e){
-            System.err.println("Não foi possivel ler o arquivo! ");
-            System.err.println(e.getMessage());
-
-
-        }
-        return new ArrayList<>();
     }
-
 }

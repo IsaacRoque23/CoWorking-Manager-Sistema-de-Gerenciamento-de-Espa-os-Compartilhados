@@ -1,35 +1,33 @@
 [
   {
-    "tipo": "SalaDeReuniao",
-    "Dados": {
-      "usarProjetor": true,
-      "id": 38424,
+    "tipo": "CabineIndividual",
+    "dados": {
+      "id": 23723,
       "nome": "isaac",
       "capacidade": 30,
       "disponivel": true,
-      "precoPorHora": 30.0
-    }
-  },
-  {
-    "tipo": "SalaDeReuniao",
-    "Dados": {
-      "usarProjetor": false,
-      "id": 24362,
-      "nome": "isaac",
-      "capacidade": 40,
-      "disponivel": true,
-      "precoPorHora": 40.0
-    }
-  },
-  {
-    "tipo": "SalaDeReuniao",
-    "Dados": {
-      "usarProjetor": true,
-      "id": 8384,
-      "nome": "isaac",
-      "capacidade": 40,
-      "disponivel": true,
       "precoPorHora": 20.0
+    }
+  },
+  {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": false,
+      "id": 47457,
+      "nome": "sala6",
+      "capacidade": 30,
+      "disponivel": false,
+      "precoPorHora": 50.0
+    }
+  },
+  {
+    "tipo": "Auditorio",
+    "dados": {
+      "id": 78433824,
+      "nome": "sala40",
+      "capacidade": 40,
+      "disponivel": true,
+      "precoPorHora": 60.0
     }
   }
 ]

@@ -16,7 +16,7 @@ public class EspacoServico {
     }
 
 
-    private void validarNomeUnico(String nome) throws EspacoJaExisteException {
+    private void validarNomeUnico(String nome) throws Exception {
         boolean existe = listarTodos().stream()
                 .anyMatch(e -> e.getNome().equalsIgnoreCase(nome));
         if (existe) {
@@ -25,7 +25,7 @@ public class EspacoServico {
     }
 
     // Buscar por ID
-    public Espaco buscarPorId(int id) throws EspacoNaoEncontradoException {
+    public Espaco buscarPorId(int id) throws Exception {
         for (Espaco e : dao.carregar()) {
             if (e.getId() == id) return e;
         }
@@ -33,12 +33,12 @@ public class EspacoServico {
     }
 
 
-    public List<Espaco> listarTodos() {
+    public List<Espaco> listarTodos() throws Exception {
         return dao.carregar();
     }
 
 
-    public <T extends Espaco> List<T> listarPorTipo(Class<T> tipo) {
+    public <T extends Espaco> List<T> listarPorTipo(Class<T> tipo) throws Exception {
         return dao.carregar().stream()
                 .filter(e -> tipo.isAssignableFrom(e.getClass()))
                 .map(e -> (T) e)
