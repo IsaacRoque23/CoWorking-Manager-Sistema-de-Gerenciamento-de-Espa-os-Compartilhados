@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": 2834,
+    "espaco": {
+      "tipo": "CabineIndividual",
+      "dados": {
+        "id": 8473874,
+        "nome": "isaac",
+        "capacidade": 30,
+        "disponivel": true,
+        "precoPorHora": 50.0
+      }
+    },
+    "dataInicio": "2025-12-07T11:25:00",
+    "dataFim": "2025-12-07T14:25:00",
+    "valorTotal": 150.0,
+    "status": "Paga"
+  }
+]

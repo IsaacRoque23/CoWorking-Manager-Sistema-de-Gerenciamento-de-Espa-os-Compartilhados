@@ -1,35 +1,43 @@
 [
   {
     "tipo": "SalaDeReuniao",
-    "Dados": {
+    "dados": {
       "usarProjetor": true,
-      "id": 38424,
-      "nome": "isaac",
-      "capacidade": 30,
+      "id": 2,
+      "nome": "railton",
+      "capacidade": 40,
       "disponivel": true,
-      "precoPorHora": 30.0
+      "precoPorHora": 120.0
     }
   },
   {
-    "tipo": "SalaDeReuniao",
-    "Dados": {
-      "usarProjetor": false,
-      "id": 24362,
-      "nome": "isaac",
-      "capacidade": 40,
+    "tipo": "Auditorio",
+    "dados": {
+      "id": 3,
+      "nome": "jansen",
+      "capacidade": 50,
       "disponivel": true,
-      "precoPorHora": 40.0
+      "precoPorHora": 250.0
     }
   },
   {
-    "tipo": "SalaDeReuniao",
-    "Dados": {
-      "usarProjetor": true,
-      "id": 8384,
-      "nome": "isaac",
+    "tipo": "CabineIndividual",
+    "dados": {
+      "id": 8473874,
+      "nome": "joaozin",
+      "capacidade": 60,
+      "disponivel": true,
+      "precoPorHora": 50.0
+    }
+  },
+  {
+    "tipo": "CabineIndividual",
+    "dados": {
+      "id": 8989,
+      "nome": "ufhduesdc",
       "capacidade": 40,
       "disponivel": true,
-      "precoPorHora": 20.0
+      "precoPorHora": 50.0
     }
   }
 ]

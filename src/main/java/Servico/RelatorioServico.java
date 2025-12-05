@@ -9,17 +9,23 @@ import java.util.List;
 
 public class RelatorioServico {
 
-    private ReservaDAO reservaDAO = new ReservaDAO();
+    private ReservaDAO reservaDAO;
 
-
+    public RelatorioServico(ReservaDAO reservaDAO) {
+        this.reservaDAO = reservaDAO;
+    }
 
     public List<Reserva> reservasNoPeriodo(LocalDateTime inicio, LocalDateTime fim) throws Exception {
-
         List<Reserva> todas = reservaDAO.carregar();
         List<Reserva> resultado = new ArrayList<>();
 
         for (Reserva r : todas) {
-            if (r.getDataInicio().isAfter(inicio) && r.getDataFim().isBefore(fim)) {
+            if (r.getEspaco() == null) continue; // Ignora reservas inválidas
+
+            boolean naoTerminaAntes = !r.getDataFim().isBefore(inicio);
+            boolean naoComecaDepois = !r.getDataInicio().isAfter(fim);
+
+            if (naoTerminaAntes && naoComecaDepois) {
                 resultado.add(r);
             }
         }
@@ -27,33 +33,26 @@ public class RelatorioServico {
         return resultado;
     }
 
-
-
     public double faturamentoPorTipo(String tipo) throws Exception {
-
         List<Reserva> todas = reservaDAO.carregar();
         double soma = 0;
 
         for (Reserva r : todas) {
-            if (r.getEspaco().getTipo().equalsIgnoreCase(tipo)) {
-                if (r.getStatus().equalsIgnoreCase("Paga")) {
-                    soma += r.getValorTotal();
-                }
+            if (r.getEspaco() != null && r.getEspaco().getTipo().equalsIgnoreCase(tipo)
+                    && r.getStatus().equalsIgnoreCase("Paga")) {
+                soma += r.getValorTotal();
             }
         }
 
         return soma;
     }
 
-
-
     public int usoDoEspaco(int id) throws Exception {
-
         List<Reserva> todas = reservaDAO.carregar();
         int contador = 0;
 
         for (Reserva r : todas) {
-            if (r.getEspaco().getId() == id) {
+            if (r.getEspaco() != null && r.getEspaco().getId() == id) {
                 contador++;
             }
         }

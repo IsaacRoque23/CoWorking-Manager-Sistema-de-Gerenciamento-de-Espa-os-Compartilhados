@@ -2,26 +2,26 @@ package Dados;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import Modelo.Espaco;
 
-import java.io.*;
+import java.io.Reader;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class jsonPersistencia<E> implements jsonPersistencia1<E> {
+public abstract class JsonPersistencia<E> implements persistencia<E> {
 
     private final Path arquivo;
     private final Gson gson;
     private final Type tipoLista;
 
-    protected jsonPersistencia(Path arquivo, Type tipoLista) {
+    protected JsonPersistencia(Path arquivo, Type tipoLista) {
         this(arquivo, new GsonBuilder().setPrettyPrinting().create(), tipoLista);
     }
 
-    protected jsonPersistencia(Path arquivo, Gson gson, Type tipoLista) {
+    protected JsonPersistencia(Path arquivo, Gson gson, Type tipoLista) {
         this.arquivo = arquivo;
         this.tipoLista = tipoLista;
         this.gson = gson;
@@ -34,34 +34,23 @@ public abstract class jsonPersistencia<E> implements jsonPersistencia1<E> {
                     w.write("[]");
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Não foi possível criar o arquivo: " + arquivo, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao criar arquivo: " + arquivo, e);
         }
     }
 
-
     @Override
-    public synchronized Espaco salvar(List<E> lista) throws Exception {
+    public synchronized void salvar(List<E> lista) throws Exception {
         try (Writer writer = Files.newBufferedWriter(arquivo)) {
             gson.toJson(lista, tipoLista, writer);
         }
-        return null;
     }
 
     @Override
-    public synchronized List<E> carregar() {
+    public synchronized List<E> carregar() throws Exception {
         try (Reader reader = Files.newBufferedReader(arquivo)) {
-            List<E> lista = gson.fromJson(reader, this.tipoLista );
-            if (lista == null) return new ArrayList<>();
-            return lista;
+            List<E> lista = gson.fromJson(reader, tipoLista);
+            return lista == null ? new ArrayList<>() : lista;
         }
-        catch(IOException e){
-            System.err.println("Não foi possivel ler o arquivo! ");
-            System.err.println(e.getMessage());
-
-
-        }
-        return new ArrayList<>();
     }
-
 }

@@ -6,9 +6,10 @@ import Excecoes.HorasInvalidasException;
 public class SalaDeReuniao extends Espaco {
 
     private boolean usarProjetor;
+    private static final double PRECO_PADRAO = 120.0;
 
-    public SalaDeReuniao(int id, String nome, int capacidade, boolean disponivel, double precoPorHora, boolean usarProjetor) throws EntradaInvalidaException {
-        super(id, nome,  capacidade, disponivel, precoPorHora);
+    public SalaDeReuniao(int id, String nome, int capacidade, boolean disponivel, boolean usarProjetor) throws EntradaInvalidaException {
+        super(id, nome,  capacidade, disponivel, PRECO_PADRAO );
         this.usarProjetor = usarProjetor;
     }
 
@@ -17,7 +18,7 @@ public class SalaDeReuniao extends Espaco {
         if(horas <= 0) {
             throw new HorasInvalidasException("Horas da reserva devem ser maiores que zero");
         }
-        double custoTotal = getPrecoPorHora() * horas;
+        double custoTotal = PRECO_PADRAO * horas;
 
         if (usarProjetor) {
             custoTotal += 15.00;

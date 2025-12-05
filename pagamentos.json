@@ -1,0 +1,12 @@
+[
+  {
+    "idReserva": 22,
+    "valorPago": 319.0,
+    "metodo": "pix"
+  },
+  {
+    "idReserva": 2834,
+    "valorPago": 150.0,
+    "metodo": "pix"
+  }
+]

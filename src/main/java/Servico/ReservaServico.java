@@ -20,10 +20,9 @@ public class ReservaServico {
 
 
         if (nova.getDataInicio().isAfter(nova.getDataFim())) {
-            throw new DataInvalidaException("Data inicial não pode ser depois da final.");
+            throw new DataInvalidaException("Data inicial não pode ser depois da final");
         }
 
-        // olhgando se tem sobreposição
         for (Reserva r : reservas) {
             boolean mesmoEspaco = r.getEspaco().getId() == nova.getEspaco().getId();
             boolean sobrepoe = nova.getDataInicio().isBefore(r.getDataFim()) && nova.getDataFim().isAfter(r.getDataInicio());
@@ -33,10 +32,11 @@ public class ReservaServico {
             }
         }
 
-        //calcular custo
         double horas = calcularHoras(nova.getDataInicio(), nova.getDataFim());
         double valor = nova.getEspaco().calcularCustoReserva(horas);
-        nova.setValorTotal(valor);
+        double valorTotal = Math.round(valor * 100.0) / 100.0; // arredonda para 2 casas decimais
+        nova.setValorTotal(valorTotal);
+
 
         reservas.add(nova);
         dao.salvar(reservas);
@@ -44,17 +44,16 @@ public class ReservaServico {
         return "Reserva criada com sucesso!";
     }
 
-    // calculkar de horas
     public double calcularHoras(LocalDateTime inicio, LocalDateTime fim) {
         long minutos = Duration.between(inicio, fim).toMinutes();
         return minutos / 60.0;
     }
 
-    // cancelar reserva
     public String cancelarReserva(int id) throws ReservaInexistenteException, Exception {
         List<Reserva> reservas = dao.carregar();
 
-        for (Reserva r : reservas) {
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva r = reservas.get(i);
             if (r.getId() == id) {
                 LocalDateTime agora = LocalDateTime.now();
 
@@ -63,17 +62,18 @@ public class ReservaServico {
 
                 double taxa = 0;
 
-                if (horasRestantes < 24) {
+                if (horasRestantes > 24) {
                     taxa = r.getValorTotal() * 0.20;
                 }
 
-                r.setStatus("Cancelada");
+                reservas.remove(i);
                 dao.salvar(reservas);
 
-                return "Reserva cancelada. Taxa aplicada: R$ " + taxa;
+                return "Reserva cancelada! Taxa aplicada: R$ " + taxa;
             }
         }
 
-        throw new ReservaInexistenteException("Reserva não encontrada.");
+        throw new ReservaInexistenteException("Reserva não encontrada");
     }
+
 }

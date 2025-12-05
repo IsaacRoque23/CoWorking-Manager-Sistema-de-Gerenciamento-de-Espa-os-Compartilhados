@@ -14,7 +14,7 @@ public class Reserva {
     private String status;
 
     public Reserva(int id, Espaco espaco, LocalDateTime dataInicio, LocalDateTime dataFim)
-            throws EntradaInvalidaException, DataInvalidaException {
+            throws EntradaInvalidaException, DataInvalidaException, Exception {
 
         if (id <= 0) {
             throw new EntradaInvalidaException("ID da reserva inválido.");
@@ -32,23 +32,22 @@ public class Reserva {
             throw new DataInvalidaException("Data de início não pode ser após a data de fim.");
         }
 
-        if (valorTotal < 0) {
-            throw new EntradaInvalidaException("Valor da reserva não pode ser negativo.");
-        }
-
-        if (status == null || status.isBlank()) {
-            status = "Pendente";
-        }
-
         this.id = id;
         this.espaco = espaco;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
-        this.valorTotal = valorTotal;
-        this.status = status;
+
+        double horas = java.time.Duration.between(dataInicio, dataFim).toHours();
+
+        try {
+            this.valorTotal = espaco.calcularCustoReserva(horas);
+        } catch (Exception e) {
+            throw new EntradaInvalidaException("Erro ao calcular valor da reserva: " + e.getMessage());
+        }
+
+        this.status = "Pendente";
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -69,7 +68,9 @@ public class Reserva {
         return dataInicio;
     }
     public void setDataInicio(LocalDateTime dataInicio) throws DataInvalidaException {
+
         if (dataInicio == null) throw new DataInvalidaException("Data de início inválida.");
+
         if (dataFim != null && dataInicio.isAfter(dataFim)) {
             throw new DataInvalidaException("Data de início não pode ser após a data de fim.");
         }
@@ -80,7 +81,11 @@ public class Reserva {
         return dataFim;
     }
     public void setDataFim(LocalDateTime dataFim) throws DataInvalidaException {
-        if (dataFim == null) throw new DataInvalidaException("Data de fim inválida.");
+
+        if (dataFim == null) {
+            throw new DataInvalidaException("Data de fim inválida.");
+        }
+
         if (dataInicio != null && dataInicio.isAfter(dataFim)) {
             throw new DataInvalidaException("Data de fim não pode ser antes da data de início.");
         }
@@ -91,7 +96,10 @@ public class Reserva {
         return valorTotal;
     }
     public void setValorTotal(double valorTotal) throws EntradaInvalidaException {
-        if (valorTotal < 0) throw new EntradaInvalidaException("Valor da reserva não pode ser negativo.");
+
+        if (valorTotal < 0){
+            throw new EntradaInvalidaException("Valor da reserva não pode ser negativo.");
+        }
         this.valorTotal = valorTotal;
     }
 
