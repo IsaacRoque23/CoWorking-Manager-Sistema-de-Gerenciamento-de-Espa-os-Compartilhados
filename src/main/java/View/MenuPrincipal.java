@@ -176,6 +176,8 @@ public class MenuPrincipal {
                         for (Espaco e : listaEspacos) {
                             System.out.println(e.getNome() + " = " + controle.usoDoEspaco(e.getId()) + " horas");
                         }
+
+                        controle.exibirEspacosMaisUtilizados();
                         break;
                     }
 

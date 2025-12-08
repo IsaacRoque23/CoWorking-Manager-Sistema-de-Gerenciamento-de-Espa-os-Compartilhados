@@ -1,41 +1,31 @@
 [
   {
-    "tipo": "SalaDeReuniao",
-    "dados": {
-      "usarProjetor": true,
-      "id": 2,
-      "nome": "railton",
-      "capacidade": 40,
-      "disponivel": true,
-      "precoPorHora": 120.0
-    }
-  },
-  {
-    "tipo": "Auditorio",
-    "dados": {
-      "id": 3,
-      "nome": "jansen",
-      "capacidade": 50,
-      "disponivel": true,
-      "precoPorHora": 250.0
-    }
-  },
-  {
     "tipo": "CabineIndividual",
     "dados": {
-      "id": 8473874,
-      "nome": "joaozin",
-      "capacidade": 60,
+      "id": 1,
+      "nome": "sala1",
+      "capacidade": 40,
       "disponivel": true,
       "precoPorHora": 50.0
     }
   },
   {
+    "tipo": "SalaDeReuniao",
+    "dados": {
+      "usarProjetor": true,
+      "id": 2,
+      "nome": "sala2",
+      "capacidade": 30,
+      "disponivel": true,
+      "precoPorHora": 120.0
+    }
+  },
+  {
     "tipo": "CabineIndividual",
     "dados": {
-      "id": 8989,
-      "nome": "ufhduesdc",
-      "capacidade": 40,
+      "id": 5545,
+      "nome": "urubu do pix",
+      "capacidade": 22,
       "disponivel": true,
       "precoPorHora": 50.0
     }

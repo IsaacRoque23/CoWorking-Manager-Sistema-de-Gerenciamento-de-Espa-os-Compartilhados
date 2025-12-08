@@ -18,6 +18,9 @@ public class ReservaServico {
     public String criarReserva(Reserva nova) throws DataInvalidaException, ReservaSobrepostaException, Exception {
         List<Reserva> reservas = dao.carregar();
 
+        if (nova.getDataInicio().isBefore(LocalDateTime.now())) {
+            throw new DataInvalidaException("Data de início da reserva não pode ser no passado!");
+        }
 
         if (nova.getDataInicio().isAfter(nova.getDataFim())) {
             throw new DataInvalidaException("Data inicial não pode ser depois da final");

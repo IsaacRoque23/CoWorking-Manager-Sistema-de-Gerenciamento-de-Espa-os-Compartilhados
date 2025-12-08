@@ -2,6 +2,7 @@ package Servico;
 
 import Dados.ReservaDAO;
 import Modelo.Reserva;
+import Modelo.Espaco;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class RelatorioServico {
         List<Reserva> resultado = new ArrayList<>();
 
         for (Reserva r : todas) {
-            if (r.getEspaco() == null) continue; // Ignora reservas inválidas
+            if (r.getEspaco() == null) continue;
 
             boolean naoTerminaAntes = !r.getDataFim().isBefore(inicio);
             boolean naoComecaDepois = !r.getDataInicio().isAfter(fim);
@@ -58,5 +59,35 @@ public class RelatorioServico {
         }
 
         return contador;
+    }
+
+    public void exibirEspacosMaisUtilizados() throws Exception {
+        List<Reserva> todas = reservaDAO.carregar();
+        List<Espaco> espacos = new ArrayList<>();
+
+
+        for (Reserva r : todas) {
+            if (r.getEspaco() != null && !espacos.contains(r.getEspaco())) {
+                espacos.add(r.getEspaco());
+            }
+        }
+
+
+        for (int i = 0; i < espacos.size(); i++) {
+            for (int j = i + 1; j < espacos.size(); j++) {
+                int usoI = usoDoEspaco(espacos.get(i).getId());
+                int usoJ = usoDoEspaco(espacos.get(j).getId());
+                if (usoJ > usoI) {
+                    Espaco temp = espacos.get(i);
+                    espacos.set(i, espacos.get(j));
+                    espacos.set(j, temp);
+                }
+            }
+        }
+
+        System.out.println("===== Espaços mais utilizados =====");
+        for (Espaco e : espacos) {
+            System.out.println(e.getNome() + " = " + usoDoEspaco(e.getId()) + " reservas");
+        }
     }
 }

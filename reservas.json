@@ -1,19 +1,53 @@
 [
   {
-    "id": 2834,
+    "id": 11,
     "espaco": {
       "tipo": "CabineIndividual",
       "dados": {
-        "id": 8473874,
-        "nome": "isaac",
-        "capacidade": 30,
+        "id": 1,
+        "nome": "sala1",
+        "capacidade": 40,
         "disponivel": true,
         "precoPorHora": 50.0
       }
     },
-    "dataInicio": "2025-12-07T11:25:00",
-    "dataFim": "2025-12-07T14:25:00",
-    "valorTotal": 150.0,
+    "dataInicio": "2020-12-08T13:00:00",
+    "dataFim": "2023-12-08T14:00:00",
+    "valorTotal": 1182645.0,
+    "status": "Pendente"
+  },
+  {
+    "id": 77,
+    "espaco": {
+      "tipo": "Auditorio",
+      "dados": {
+        "id": 3,
+        "nome": "sala3",
+        "capacidade": 32,
+        "disponivel": true,
+        "precoPorHora": 250.0
+      }
+    },
+    "dataInicio": "2025-12-08T08:54:00",
+    "dataFim": "2025-12-08T13:54:00",
+    "valorTotal": 1350.0,
     "status": "Paga"
+  },
+  {
+    "id": 666,
+    "espaco": {
+      "tipo": "CabineIndividual",
+      "dados": {
+        "id": 1,
+        "nome": "sala1",
+        "capacidade": 40,
+        "disponivel": true,
+        "precoPorHora": 50.0
+      }
+    },
+    "dataInicio": "2020-09-12T13:00:00",
+    "dataFim": "2020-09-12T15:00:00",
+    "valorTotal": 100.0,
+    "status": "Pendente"
   }
 ]
